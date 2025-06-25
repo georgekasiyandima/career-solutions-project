@@ -1,4 +1,4 @@
-# 🚀 Getty Jobboard Website
+# 🚀 Career Solutions
 
 [![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)](https://nodejs.org/)
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
@@ -67,19 +67,20 @@
 ```bash
 # Clone the repository
 git clone https://github.com/georgekasiyandima/career-solutions-typescript.git
-cd Getty\ Jobboard\ Website
+cd Career\ Solutions
 
-# Install dependencies
-cd backend && npm install
-cd ../client && npm install
+# Install all dependencies
+npm run install:all
 
 # Set up environment variables
-cp backend/.env.example backend/.env
-cp client/.env.example client/.env
+cp env.example .env
+# Edit .env with your configuration
+
+# Set up the database
+npm run setup
 
 # Start development servers
-# Terminal 1: cd backend && npm run dev
-# Terminal 2: cd client && npm start
+npm run dev
 ```
 
 Visit `http://localhost:3000` to see the application running!
@@ -97,50 +98,28 @@ Visit `http://localhost:3000` to see the application running!
 1. **Clone the repository**
    ```bash
    git clone https://github.com/georgekasiyandima/career-solutions-typescript.git
-   cd Getty\ Jobboard\ Website
+   cd Career\ Solutions
    ```
 
-2. **Install backend dependencies**
+2. **Install all dependencies**
    ```bash
-   cd backend
-   npm install
+   npm run install:all
    ```
 
-3. **Install frontend dependencies**
+3. **Set up environment variables**
    ```bash
-   cd ../client
-   npm install
-   ```
-
-4. **Set up environment variables**
-   ```bash
-   # Backend
-   cd ../backend
-   cp .env.example .env
-   # Edit .env with your configuration
-   
-   # Frontend
-   cd ../client
-   cp .env.example .env
+   cp env.example .env
    # Edit .env with your configuration
    ```
 
-5. **Set up the database**
+4. **Set up the database**
    ```bash
-   cd ../backend
-   npm run migrate
-   npm run seed
+   npm run setup
    ```
 
-6. **Start the application**
+5. **Start the application**
    ```bash
-   # Terminal 1 - Backend
-   cd backend
    npm run dev
-   
-   # Terminal 2 - Frontend
-   cd client
-   npm start
    ```
 
 ## 📚 API Documentation
@@ -233,39 +212,58 @@ Create a new booking appointment.
 ## 📁 Project Structure
 
 ```
-Getty Jobboard Website/
-├── 📁 client/                    # Frontend React application
+Career Solutions/
+├── 📁 client/                    # React Frontend Application
 │   ├── 📁 public/               # Static assets
-│   │   ├── 📁 images/          # Image assets
-│   │   ├── index.html          # HTML template
-│   │   └── manifest.json       # PWA manifest
-│   ├── 📁 src/                 # Source code
-│   │   ├── 📁 components/      # React components
-│   │   ├── 📁 utils/           # Utility functions
-│   │   ├── 📁 __tests__/       # Test files
-│   │   ├── App.jsx             # Main App component
-│   │   └── index.jsx           # Entry point
-│   ├── package.json            # Frontend dependencies
-│   └── tailwind.config.js      # Tailwind configuration
-├── 📁 backend/                  # Backend Node.js application
-│   ├── 📁 routes/              # API routes
-│   ├── 📁 middleware/          # Custom middleware
-│   ├── 📁 migrations/          # Database migrations
-│   ├── 📁 seeds/               # Database seeders
-│   ├── 📁 utils/               # Utility functions
-│   ├── server.js               # Express server
-│   ├── package.json            # Backend dependencies
-│   └── knexfile.js             # Database configuration
-├── README.md                   # This file
-├── .gitignore                  # Git ignore rules
-└── package.json                # Root package.json
+│   ├── 📁 src/                  # Source code
+│   │   ├── 📁 components/       # React components
+│   │   │   ├── 📁 common/       # Reusable components
+│   │   │   ├── 📁 layout/       # Layout components
+│   │   │   ├── 📁 forms/        # Form components
+│   │   │   ├── 📁 pages/        # Page components
+│   │   │   └── 📁 features/     # Feature components
+│   │   ├── 📁 hooks/            # Custom React hooks
+│   │   ├── 📁 context/          # React context providers
+│   │   ├── 📁 services/         # API services
+│   │   ├── 📁 config/           # Configuration files
+│   │   ├── 📁 assets/           # Static assets
+│   │   └── 📁 __tests__/        # Test files
+│   ├── 📁 build/                # Production build
+│   ├── package.json             # Frontend dependencies
+│   └── Dockerfile               # Frontend Docker config
+├── 📁 backend/                  # Node.js Backend Application
+│   ├── 📁 config/               # Configuration files
+│   ├── 📁 controllers/          # Request handlers
+│   ├── 📁 models/               # Data models
+│   ├── 📁 routes/               # API routes
+│   ├── 📁 middleware/           # Custom middleware
+│   ├── 📁 utils/                # Utility functions
+│   ├── 📁 migrations/           # Database migrations
+│   ├── 📁 seeds/                # Database seeders
+│   ├── 📁 docs/                 # API documentation
+│   ├── server.js                # Express server
+│   ├── package.json             # Backend dependencies
+│   └── Dockerfile               # Backend Docker config
+├── 📁 docs/                     # Project Documentation
+│   ├── 📁 api/                  # API documentation
+│   ├── 📁 deployment/           # Deployment guides
+│   ├── 📁 development/          # Development guides
+│   └── 📁 architecture/         # Architecture docs
+├── 📁 scripts/                  # Build and deployment scripts
+├── 📄 package.json              # Root package.json (Monorepo)
+├── 📄 docker-compose.yml        # Docker orchestration
+├── 📄 Dockerfile                # Backend Docker configuration
+├── 📄 .gitignore                # Git ignore rules
+├── 📄 env.example               # Environment variables template
+├── 📄 README.md                 # This file
+└── 📄 PROJECT_STRUCTURE.md      # Detailed structure guide
 ```
 
 ## 🔐 Environment Variables
 
 ### Backend Environment Variables
 
-Create a `.env` file in the `backend` directory:
+Create a `.env` file in the root directory:
 
 ```env
 # Server Configuration
@@ -292,7 +290,7 @@ CORS_ORIGIN=http://localhost:3000
 
 ### Frontend Environment Variables
 
-Create a `.env` file in the `client` directory:
+The frontend environment variables are configured in the same `.env` file:
 
 ```env
 # API Configuration
@@ -312,13 +310,14 @@ REACT_APP_ENABLE_ANALYTICS=true
 ### Running Tests
 
 ```bash
-# Backend tests
-cd backend
+# Run all tests
 npm test
 
-# Frontend tests
-cd client
-npm test
+# Run backend tests only
+npm run test:backend
+
+# Run frontend tests only
+npm run test:frontend
 
 # Run tests with coverage
 npm run test:coverage
@@ -330,6 +329,19 @@ npm run test:coverage
 - **Supertest** - API testing
 
 ## 📦 Deployment
+
+### Docker Deployment
+
+```bash
+# Build and run with Docker Compose
+docker-compose up --build
+
+# Run in background
+docker-compose up -d
+
+# Stop services
+docker-compose down
+```
 
 ### Production Deployment
 
@@ -356,7 +368,7 @@ npm run test:coverage
 
 1. **Build the production version**
    ```bash
-   npm run build
+   npm run build:frontend
    ```
 
 2. **Deploy the build folder**
@@ -477,6 +489,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ by George Kasiyandima**
 
-For detailed performance optimization strategies, check out the [OPTIMIZATION_GUIDE.md](client/OPTIMIZATION_GUIDE.md).
+For detailed project structure and architecture, check out the [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md).
+
+For performance optimization strategies, check out the [OPTIMIZATION_GUIDE.md](client/OPTIMIZATION_GUIDE.md).
 
 </div> 

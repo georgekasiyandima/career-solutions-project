@@ -1,0 +1,53 @@
+{
+  "name": "career-solutions",
+  "version": "1.0.0",
+  "description": "A modern, full-stack web application for job posting and career solutions",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd client && npm start",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd client && npm run build",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd client && npm test",
+    "install:all": "npm install && cd backend && npm install && cd ../client && npm install",
+    "setup": "npm run install:all && cd backend && npm run migrate && npm run seed",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend": "cd client && npm run lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "clean": "rm -rf node_modules backend/node_modules client/node_modules client/build",
+    "optimize:images": "node scripts/optimize-images.js",
+    "optimize:all": "npm run optimize:images && npm run build:frontend",
+    "prebuild": "npm run optimize:images"
+  },
+  "keywords": [
+    "career",
+    "job-board",
+    "react",
+    "nodejs",
+    "express",
+    "fullstack"
+  ],
+  "author": "George Kasiyandima",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.1.1",
+    "sharp": "^0.33.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/georgekasiyandima/career-solutions-typescript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/georgekasiyandima/career-solutions-typescript/issues"
+  },
+  "homepage": "https://github.com/georgekasiyandima/career-solutions-typescript#readme"
+} 
