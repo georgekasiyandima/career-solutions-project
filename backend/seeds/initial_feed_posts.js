@@ -1,32 +1,17 @@
-exports.seed = async function (knex) {
-  await knex('feed_posts').del();
-
-  await knex('feed_posts').insert([
-    {
-      type: 'job',
-      content: 'New Cruise Ship Bartender role posted! Check it out and apply today.',
-      link: '/jobs/1',
-      created_at: new Date().toISOString(),
-      is_active: true
-    },
-    {
-      type: 'motivation',
-      content: 'Keep pushing—your dream job is closer than you think! Stay consistent and believe in yourself.',
-      created_at: new Date().toISOString(),
-      is_active: true
-    },
-    {
-      type: 'tip',
-      content: 'Tailor your resume for each job application to stand out. Highlight relevant skills!',
-      created_at: new Date().toISOString(),
-      is_active: true
-    },
-    {
-      type: 'update',
-      content: 'Now offering Visa Application Assistance—book a consultation to get started!',
-      link: '/booking',
-      created_at: new Date().toISOString(),
-      is_active: true
-    }
-  ]);
-};
+exports.seed = function(knex) {
+  return knex('feed_posts').del()
+    .then(function () {
+      return knex('feed_posts').insert([
+        { title: 'Douglas Chikwira hired by Royal Caribbean!', content: 'Douglas Chikwira has joined Royal Caribbean as an Assistant Waiter. Congratulations Douglas!', author_id: 1, is_active: true, created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Nathanie Meke hired by Cunard!', content: 'Nathanie Meke has joined Cunard as an Assistant Waiter. Well done Nathanie!', author_id: 2, is_active: true, created_at: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Yolanda Jambo hired by Carnival Cruise!', content: 'Yolanda Jambo is now an Assistant Waiter at Carnival Cruise. Congratulations Yolanda!', author_id: 3, is_active: true, created_at: new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Daniel Majuru hired by Sean Carroll Trucks, Ireland!', content: 'Daniel Majuru is now an HGV Driver at Sean Carroll Trucks in Ireland. Well done Daniel!', author_id: 4, is_active: true, created_at: new Date(Date.now() - 24 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 24 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Tinashe Mpunga hired by Rosteka Trucks, Poland!', content: 'Tinashe Mpunga is now a Truck Driver at Rosteka Trucks in Poland. Congratulations Tinashe!', author_id: 5, is_active: true, created_at: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Thilda Mutsago hired by Princcess Cruise Line!', content: 'Thilda Mutsago is now a Housekeeper at Princcess Cruise Line. Well done Thilda!', author_id: 6, is_active: true, created_at: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Sharleen Nziradzarwo hired in UAE!', content: 'Sharleen Nziradzarwo is now a Hostess in the UAE. Congratulations Sharleen!', author_id: 7, is_active: true, created_at: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Ernest Chikwira hired by Carnival!', content: 'Ernest Chikwira is now a Waiter at Carnival. Well done Ernest!', author_id: 8, is_active: true, created_at: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Lekhuthaba Moyo hired by Disney Cruise Lines!', content: 'Lekhuthaba Moyo is now a Waiter at Disney Cruise Lines. Congratulations Lekhuthaba!', author_id: 9, is_active: true, created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString() },
+        { title: 'Leo Karume hired in UAE!', content: 'Leo Karume is now a Sommelier in the UAE. Well done Leo!', author_id: 10, is_active: true, created_at: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString() }
+      ]);
+    });
+}; 

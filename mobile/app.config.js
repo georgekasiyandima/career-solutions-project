@@ -1,0 +1,22 @@
+export default {
+  name: 'Career Solutions',
+  slug: 'career-solutions-mobile',
+  version: '1.0.0',
+  orientation: 'portrait',
+  userInterfaceStyle: 'light',
+  splash: {
+    resizeMode: 'contain',
+    backgroundColor: '#ffffff'
+  },
+  assetBundlePatterns: [
+    '**/*'
+  ],
+  ios: {
+    supportsTablet: true
+  },
+  android: {
+    adaptiveIcon: {
+      backgroundColor: '#FFFFFF'
+    }
+  }
+};

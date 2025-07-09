@@ -3,6 +3,20 @@ const router = express.Router();
 const db = require('../database');
 const sendEmail = require('../utils/sendEmail');
 
+// GET /api/enquiry - Get all enquiries (for admin dashboard)
+router.get('/', async (req, res) => {
+  try {
+    const enquiries = await db('enquiries')
+      .select('*')
+      .orderBy('created_at', 'desc');
+    
+    res.json(enquiries);
+  } catch (err) {
+    console.error('Error fetching enquiries:', err);
+    res.status(500).json({ message: 'Error fetching enquiries' });
+  }
+});
+
 // POST /api/enquiry - Create a new enquiry
 router.post('/', async (req, res) => {
   try {

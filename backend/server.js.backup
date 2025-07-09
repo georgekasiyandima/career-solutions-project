@@ -1,0 +1,46 @@
+require("dotenv").config();
+
+const express = require("express");
+const cors = require("cors");
+const { authenticateToken, authorizeRole } = require("./middleware/auth");
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// Middleware
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.use(express.json());
+
+// Serve static files from the public directory
+app.use("/public", express.static("public"));
+
+// Public routes (no authentication required)
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/booking", require("./routes/bookings"));
+app.use("/api/enquiry", require("./routes/enquiries"));
+app.use("/api/jobs", require("./routes/jobs"));
+app.use("/api/success-stories", require("./routes/successStories"));
+app.use("/api/feed", require("./routes/feed"));
+app.use("/api/track", require("./routes/track"));
+
+// Protected admin routes (authentication required)
+app.use("/api/analytics", authenticateToken, authorizeRole(['admin']), require("./routes/analytics"));
+app.use("/api/admin", authenticateToken, authorizeRole(['admin']), require("./routes/admin"));
+app.use("/api/subscriptions", authenticateToken, authorizeRole(['admin']), require("./routes/subscriptions"));
+app.use("/api/job-sends", authenticateToken, authorizeRole(['admin']), require("./routes/jobSends"));
+app.use("/api/clients", authenticateToken, authorizeRole(['admin']), require("./routes/clients"));
+app.use("/api/content", authenticateToken, authorizeRole(['admin']), require("./routes/content"));
+app.use("/api/users", authenticateToken, authorizeRole(['admin']), require("./routes/users"));
+app.use("/api/roles", authenticateToken, authorizeRole(['admin']), require("./routes/roles"));
+app.use("/api/interview-resources", authenticateToken, authorizeRole(['admin']), require("./routes/interviewResources"));
+
+// Upload routes (commented out for now)
+//app.use("/api/uploads", require("./routes/uploads"));
+//app.use("/api/testimonials", require("./routes/testimonials"));
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

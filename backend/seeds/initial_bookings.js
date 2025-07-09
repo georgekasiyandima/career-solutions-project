@@ -1,0 +1,17 @@
+exports.seed = function(knex) {
+  return knex('bookings').del()
+    .then(function () {
+      return knex('bookings').insert([
+        { user_id: 1, service: 'Assistant Waiter - Royal Caribbean', booking_date: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 2, service: 'Assistant Waiter - Cunard', booking_date: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 28 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 3, service: 'Assistant Waiter - Carnival Cruise', booking_date: new Date(Date.now() + 9 * 24 * 60 * 60 * 1000).toISOString(), status: 'pending', created_at: new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 26 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 4, service: 'HGV Driver - Sean Carroll Trucks, Ireland', booking_date: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 24 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 24 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 5, service: 'Truck Driver - Rosteka Trucks, Poland', booking_date: new Date(Date.now() + 11 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 6, service: 'Housekeeper - Princcess Cruise Line', booking_date: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString(), status: 'pending', created_at: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 7, service: 'Hostess - UAE', booking_date: new Date(Date.now() + 13 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 8, service: 'Waiter - Carnival', booking_date: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 9, service: 'Waiter - Disney Cruise Lines', booking_date: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(), status: 'pending', created_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString() },
+        { user_id: 10, service: 'Sommelier - UAE', booking_date: new Date(Date.now() + 16 * 24 * 60 * 60 * 1000).toISOString(), status: 'confirmed', created_at: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(), updated_at: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString() }
+      ]);
+    });
+}; 
