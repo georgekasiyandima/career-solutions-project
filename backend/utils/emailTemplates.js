@@ -40,7 +40,7 @@ const getWelcomeEmailTemplate = (firstName) => `
       <p style="color: #333;">Ready to get started? Visit our website or contact us to schedule your first session.</p>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="http://localhost:3000" style="background-color: #07363c; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Visit Our Website</a>
+        <a href="${process.env.FRONTEND_URL || 'https://careersolutions.com'}" style="background-color: #07363c; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Visit Our Website</a>
       </div>
       
       <p style="color: #333;">Best regards,<br>The Career Solutions Team</p>
@@ -114,7 +114,7 @@ const getAdminNotificationTemplate = (notificationData) => `
       </div>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="http://localhost:3000/admin" style="background-color: #07363c; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">View Admin Panel</a>
+        <a href="${process.env.FRONTEND_URL || 'https://careersolutions.com'}/admin" style="background-color: #07363c; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">View Admin Panel</a>
       </div>
       
       <p style="color: #333;">Best regards,<br>Career Solutions System</p>

@@ -59,7 +59,7 @@ router.post('/', async (req, res) => {
     const html = `
       <div style="font-family: 'Poppins', sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
         <div style="text-align: center; padding: 20px 0;">
-          <img src="http://localhost:5000/public/assets/Logo.png" alt="Career Solutions Logo" style="width: 150px; height: auto;" />
+          <img src="${process.env.BACKEND_URL || 'https://api.careersolutions.com'}/public/assets/Logo.png" alt="Career Solutions Logo" style="width: 150px; height: auto;" />
         </div>
         <h2 style="color: #07363c; text-align: center;">Thank You for Your Enquiry</h2>
         <p style="color: #333;">Dear ${firstName},</p>

@@ -4,16 +4,16 @@ exports.seed = async function(knex) {
   // 1. Add/Find Users
   const usersData = [
     {
-      first_name: 'Monica', last_name: 'Chidhakwa', email: 'monicachidhakwa43@gmail.com', password_hash: '$2b$10$testhash', created_at: new Date(), updated_at: new Date()
+      first_name: 'Monica', last_name: 'Chidhakwa', email: 'monicachidhakwa43@gmail.com', password_hash: '$2b$12$Gr0GbJbV5.SVrzvEcVxKYuY8FmiQE7J3tYh1iHY091yWepMSBxD9a', created_at: new Date(), updated_at: new Date()
     },
     {
-      first_name: 'Mthabisi M.', last_name: 'Moyo', email: 'moyobongie59@gmail.com', password_hash: '$2b$10$testhash', created_at: new Date(), updated_at: new Date()
+      first_name: 'Mthabisi M.', last_name: 'Moyo', email: 'moyobongie59@gmail.com', password_hash: '$2b$12$Gr0GbJbV5.SVrzvEcVxKYuY8FmiQE7J3tYh1iHY091yWepMSBxD9a', created_at: new Date(), updated_at: new Date()
     },
     {
-      first_name: 'Nelly Charity', last_name: 'Luthuli', email: 'neliemaneleza@gmail.com', password_hash: '$2b$10$testhash', created_at: new Date(), updated_at: new Date()
+      first_name: 'Nelly Charity', last_name: 'Luthuli', email: 'neliemaneleza@gmail.com', password_hash: '$2b$12$Gr0GbJbV5.SVrzvEcVxKYuY8FmiQE7J3tYh1iHY091yWepMSBxD9a', created_at: new Date(), updated_at: new Date()
     },
     {
-      first_name: 'Leo', last_name: 'Karume', email: 'karumeleo10@gmail.com', password_hash: '$2b$10$testhash', created_at: new Date(), updated_at: new Date()
+      first_name: 'Leo', last_name: 'Karume', email: 'karumeleo10@gmail.com', password_hash: '$2b$12$Gr0GbJbV5.SVrzvEcVxKYuY8FmiQE7J3tYh1iHY091yWepMSBxD9a', created_at: new Date(), updated_at: new Date()
     }
   ];
 

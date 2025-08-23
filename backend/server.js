@@ -5,13 +5,16 @@ const cors = require("cors");
 const http = require("http");
 const WebSocket = require("ws");
 const jwt = require("jsonwebtoken");
+const cookieParser = require('cookie-parser');
 const { authenticateToken, authorizeRole } = require("./middleware/auth");
 const app = express();
 const server = http.createServer(app);
+
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
+
 const PORT = process.env.PORT || 5000;
 
 // WebSocket server
@@ -50,7 +53,6 @@ wss.on('connection', (ws, req) => {
 
   console.log(`WebSocket connected: ${user.id} (${user.role})`);
   
-  // Store client connection
   clients.set(user.id, {
     ws,
     user,
@@ -58,13 +60,11 @@ wss.on('connection', (ws, req) => {
     lastActivity: new Date()
   });
 
-  // Join user to their role room
   if (!rooms.has(user.role)) {
     rooms.set(user.role, new Set());
   }
   rooms.get(user.role).add(user.id);
 
-  // Send welcome message
   ws.send(JSON.stringify({
     type: 'connected',
     data: {
@@ -74,7 +74,6 @@ wss.on('connection', (ws, req) => {
     }
   }));
 
-  // Handle incoming messages
   ws.on('message', (message) => {
     try {
       const data = JSON.parse(message);
@@ -84,20 +83,14 @@ wss.on('connection', (ws, req) => {
     }
   });
 
-  // Handle client disconnect
   ws.on('close', (code, reason) => {
     console.log(`WebSocket disconnected: ${user.id} (${code}: ${reason})`);
-    
-    // Remove from clients
     clients.delete(user.id);
-    
-    // Remove from role room
     if (rooms.has(user.role)) {
       rooms.get(user.role).delete(user.id);
     }
   });
 
-  // Handle errors
   ws.on('error', (error) => {
     console.error(`WebSocket error for user ${user.id}:`, error);
   });
@@ -106,45 +99,34 @@ wss.on('connection', (ws, req) => {
 // Handle WebSocket messages
 const handleWebSocketMessage = (ws, user, data) => {
   const { type, data: messageData } = data;
-  
-  // Update last activity
   const client = clients.get(user.id);
-  if (client) {
-    client.lastActivity = new Date();
-  }
+  if (client) client.lastActivity = new Date();
 
   switch (type) {
     case 'ping':
       ws.send(JSON.stringify({ type: 'pong', timestamp: Date.now() }));
       break;
-      
     case 'request_analytics':
       handleAnalyticsRequest(ws, user, messageData);
       break;
-      
     case 'request_notifications':
       handleNotificationsRequest(ws, user, messageData);
       break;
-      
     case 'request_system_status':
       handleSystemStatusRequest(ws, user);
       break;
-      
     case 'user_activity':
       broadcastToAdmins({
         type: 'user_activity',
         data: { ...messageData, userId: user.id, timestamp: new Date().toISOString() }
       });
       break;
-      
     case 'update_job':
       handleJobUpdate(ws, user, messageData);
       break;
-      
     case 'update_content':
       handleContentUpdate(ws, user, messageData);
       break;
-      
     default:
       console.log('Unknown WebSocket message type:', type);
   }
@@ -153,18 +135,13 @@ const handleWebSocketMessage = (ws, user, data) => {
 // Handle analytics request
 const handleAnalyticsRequest = async (ws, user, data) => {
   try {
-    // This would typically fetch from database
     const analytics = {
       totalViews: Math.floor(Math.random() * 10000),
       uniqueSessions: Math.floor(Math.random() * 5000),
       totalClicks: Math.floor(Math.random() * 2000),
       conversionRate: Math.random() * 10
     };
-    
-    ws.send(JSON.stringify({
-      type: 'analytics_update',
-      data: analytics
-    }));
+    ws.send(JSON.stringify({ type: 'analytics_update', data: analytics }));
   } catch (error) {
     console.error('Analytics request error:', error);
   }
@@ -173,21 +150,14 @@ const handleAnalyticsRequest = async (ws, user, data) => {
 // Handle notifications request
 const handleNotificationsRequest = async (ws, user, data) => {
   try {
-    // This would typically fetch from database
-    const notifications = [
-      {
-        id: 1,
-        title: 'New booking received',
-        message: 'A new booking has been submitted',
-        type: 'booking',
-        created_at: new Date().toISOString()
-      }
-    ];
-    
-    ws.send(JSON.stringify({
-      type: 'notification',
-      data: notifications
-    }));
+    const notifications = [{
+      id: 1,
+      title: 'New booking received',
+      message: 'A new booking has been submitted',
+      type: 'booking',
+      created_at: new Date().toISOString()
+    }];
+    ws.send(JSON.stringify({ type: 'notification', data: notifications }));
   } catch (error) {
     console.error('Notifications request error:', error);
   }
@@ -203,11 +173,7 @@ const handleSystemStatusRequest = async (ws, user) => {
       uptime: Math.floor(Math.random() * 30),
       securityStatus: 'secure'
     };
-    
-    ws.send(JSON.stringify({
-      type: 'system_status',
-      data: systemStatus
-    }));
+    ws.send(JSON.stringify({ type: 'system_status', data: systemStatus }));
   } catch (error) {
     console.error('System status request error:', error);
   }
@@ -216,19 +182,12 @@ const handleSystemStatusRequest = async (ws, user) => {
 // Handle job update
 const handleJobUpdate = async (ws, user, data) => {
   try {
-    // This would typically update the database
     console.log('Job update:', data);
-    
-    // Broadcast to all admins
     broadcastToAdmins({
       type: 'job_update',
       data: { ...data, updatedBy: user.id, timestamp: new Date().toISOString() }
     });
-    
-    ws.send(JSON.stringify({
-      type: 'job_update_success',
-      data: { jobId: data.jobId }
-    }));
+    ws.send(JSON.stringify({ type: 'job_update_success', data: { jobId: data.jobId } }));
   } catch (error) {
     console.error('Job update error:', error);
   }
@@ -237,25 +196,18 @@ const handleJobUpdate = async (ws, user, data) => {
 // Handle content update
 const handleContentUpdate = async (ws, user, data) => {
   try {
-    // This would typically update the database
     console.log('Content update:', data);
-    
-    // Broadcast to all admins
     broadcastToAdmins({
       type: 'content_update',
       data: { ...data, updatedBy: user.id, timestamp: new Date().toISOString() }
     });
-    
-    ws.send(JSON.stringify({
-      type: 'content_update_success',
-      data: { contentId: data.contentId }
-    }));
+    ws.send(JSON.stringify({ type: 'content_update_success', data: { contentId: data.contentId } }));
   } catch (error) {
     console.error('Content update error:', error);
   }
 };
 
-// Broadcast to all admin users
+// Broadcast functions
 const broadcastToAdmins = (message) => {
   const adminRoom = rooms.get('admin');
   if (adminRoom) {
@@ -268,7 +220,6 @@ const broadcastToAdmins = (message) => {
   }
 };
 
-// Broadcast to specific user
 const broadcastToUser = (userId, message) => {
   const client = clients.get(userId);
   if (client && client.ws.readyState === WebSocket.OPEN) {
@@ -276,7 +227,6 @@ const broadcastToUser = (userId, message) => {
   }
 };
 
-// Broadcast to all users
 const broadcastToAll = (message) => {
   clients.forEach((client) => {
     if (client.ws.readyState === WebSocket.OPEN) {
@@ -285,7 +235,6 @@ const broadcastToAll = (message) => {
   });
 };
 
-// Export WebSocket functions for use in routes
 app.locals.broadcastToAdmins = broadcastToAdmins;
 app.locals.broadcastToUser = broadcastToUser;
 app.locals.broadcastToAll = broadcastToAll;
@@ -293,19 +242,20 @@ app.locals.broadcastToAll = broadcastToAll;
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 
-// Serve static files from the public directory
+// Serve static files
 app.use("/public", express.static("public"));
-// Serve uploaded files
 app.use("/uploads", express.static("uploads"));
 
-// Public routes (no authentication required)
+// Public routes
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/booking", require("./routes/bookings"));
 app.use("/api/enquiry", require("./routes/enquiries"));
@@ -314,12 +264,15 @@ app.use("/api/success-stories", require("./routes/successStories"));
 app.use("/api/feed", require("./routes/feed"));
 app.use("/api/track", require("./routes/track"));
 app.use("/api/search", require("./routes/search"));
-app.use("/api/interview-resources", require("./routes/interviewResources")); // Public read access
+app.use("/api/interview-resources", require("./routes/interviewResources"));
+app.use("/api/testimonials", require("./routes/testimonials"));
+app.use("/api/services", require("./routes/services"));
+app.use("/api/facts", require("./routes/facts"));
 
-// Protected routes (authentication required)
+// Protected routes
 app.use("/api/notifications", require("./routes/notifications"));
 
-// Protected admin routes (authentication required)
+// Protected admin routes
 app.use("/api/analytics", authenticateToken, authorizeRole(['admin']), require("./routes/analytics"));
 app.use("/api/admin", authenticateToken, authorizeRole(['admin']), require("./routes/admin"));
 app.use("/api/subscriptions", authenticateToken, authorizeRole(['admin']), require("./routes/subscriptions"));

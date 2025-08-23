@@ -173,7 +173,7 @@ class EmailService {
           <p>We'd love to hear your feedback about your experience. Your input helps us improve our services.</p>
           
           <div style="text-align: center; margin: 30px 0;">
-            <a href="http://localhost:3000/feedback" style="background-color: #07363c; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Share Your Feedback</a>
+            <a href="${process.env.FRONTEND_URL || 'https://careersolutions.com'}/feedback" style="background-color: #07363c; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Share Your Feedback</a>
           </div>
           
           <p>If you have any questions or need further assistance, please don't hesitate to contact us.</p>

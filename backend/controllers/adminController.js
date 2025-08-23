@@ -43,7 +43,7 @@ exports.bulkUpload = async (req, res) => {
           first_name: rec.first_name || rec.FirstName || rec.firstName,
           last_name: rec.last_name || rec.LastName || rec.lastName,
           email: rec.email,
-          password_hash: '$2b$10$testhash',
+          password_hash: '$2b$12$Gr0GbJbV5.SVrzvEcVxKYuY8FmiQE7J3tYh1iHY091yWepMSBxD9a',
           created_at: new Date(),
           updated_at: new Date()
         }).onConflict('email').ignore().returning('id');
