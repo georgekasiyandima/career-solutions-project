@@ -95,6 +95,70 @@ class EmailService {
     }
   }
 
+  // Send order confirmation email
+  static async sendOrderConfirmation(orderData) {
+    try {
+      const { orderNumber, serviceName, amount, clientName, clientEmail } = orderData;
+      const subject = 'Order Confirmation - Career Solutions';
+      const html = emailTemplates.getOrderConfirmationTemplate({
+        orderNumber,
+        serviceName,
+        amount,
+        clientName,
+      });
+      const text = `Thank you for your order, ${clientName}. Order Number: ${orderNumber}. Amount: R${amount}`;
+      
+      await sendEmail(clientEmail, subject, text, html);
+      console.log(`Order confirmation sent to ${clientEmail}`);
+    } catch (error) {
+      console.error('Error sending order confirmation email:', error);
+      throw error;
+    }
+  }
+
+  // Send payment confirmation email
+  static async sendPaymentConfirmation(paymentData) {
+    try {
+      const { orderNumber, serviceName, amount, clientName, clientEmail, serviceData } = paymentData;
+      const subject = 'Payment Confirmed - Career Solutions';
+      const html = emailTemplates.getPaymentConfirmationTemplate({
+        orderNumber,
+        serviceName,
+        amount,
+        clientName,
+        serviceData,
+      });
+      const text = `Payment confirmed for order ${orderNumber}. We'll begin working on your ${serviceName} service shortly.`;
+      
+      await sendEmail(clientEmail, subject, text, html);
+      console.log(`Payment confirmation sent to ${clientEmail}`);
+      
+      // Also send admin notification
+      const adminEmail = process.env.ADMIN_EMAIL || 'admin@careersolutions.com';
+      const adminSubject = `New Payment Received - Order ${orderNumber}`;
+      const adminHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #0B444A;">New Payment Received</h2>
+          <p>A payment has been confirmed for the following order:</p>
+          <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
+            <p><strong>Order Number:</strong> ${orderNumber}</p>
+            <p><strong>Service:</strong> ${serviceName}</p>
+            <p><strong>Amount:</strong> R${amount}</p>
+            <p><strong>Client:</strong> ${clientName} (${clientEmail})</p>
+          </div>
+          <p>Please begin processing this order.</p>
+        </div>
+      `;
+      const adminText = `New payment received for order ${orderNumber} - ${serviceName} - R${amount}`;
+      
+      await sendEmail(adminEmail, adminSubject, adminText, adminHtml);
+      console.log(`Admin notification sent for payment ${orderNumber}`);
+    } catch (error) {
+      console.error('Error sending payment confirmation email:', error);
+      throw error;
+    }
+  }
+
   // Send admin notification for new enquiries
   static async sendAdminEnquiryNotification(enquiryData) {
     try {

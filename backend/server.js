@@ -267,13 +267,17 @@ app.use("/api/search", require("./routes/search"));
 app.use("/api/interview-resources", require("./routes/interviewResources"));
 app.use("/api/testimonials", require("./routes/testimonials"));
 app.use("/api/services", require("./routes/services"));
+app.use("/api/service-orders", require("./routes/serviceOrders"));
 app.use("/api/facts", require("./routes/facts"));
 
 // Protected routes
 app.use("/api/notifications", require("./routes/notifications"));
 
+// Public analytics route for tracking
+app.use("/api/analytics", require("./routes/businessAnalytics"));
+
 // Protected admin routes
-app.use("/api/analytics", authenticateToken, authorizeRole(['admin']), require("./routes/analytics"));
+app.use("/api/admin/analytics", authenticateToken, authorizeRole(['admin']), require("./routes/analytics"));
 app.use("/api/admin", authenticateToken, authorizeRole(['admin']), require("./routes/admin"));
 app.use("/api/subscriptions", authenticateToken, authorizeRole(['admin']), require("./routes/subscriptions"));
 app.use("/api/job-sends", authenticateToken, authorizeRole(['admin']), require("./routes/jobSends"));

@@ -3,40 +3,83 @@ const router = express.Router();
 
 const servicesData = [
   {
-    id: 1,
-    title: 'Resume Creation',
+    id: 'resume-local',
+    title: 'Local Resume',
     icon: 'FaFileAlt',
-    description: 'Professional resume crafting to make you stand out',
-    packages: [
-      {
-        name: 'Resume Only',
-        price: 'R350',
-        description: 'Get a professionally crafted resume tailored to your career goals.',
-        features: ['Customized resume creation', 'ATS Compliant Resume', '3 rounds of revisions'],
-        popular: false
-      },
-      {
-        name: 'Full Comprehensive Package',
-        price: 'R1000',
-        description: 'Complete job application support package for maximum success.',
-        features: [
-          'Customized resume creation',
-          'Professional email guidance',
-          'Job website navigation tips',
-          'Hiring company contacts',
-          'Interview preparation',
-          'Ongoing application support'
-        ],
-        popular: true
-      }
+    description: 'Professional resume tailored for South African job market',
+    price: 350,
+    category: 'resume',
+    type: 'local',
+    features: [
+      'ATS-compliant resume',
+      'Optimized for local SA job market',
+      '3 rounds of revisions',
+      'Professional formatting',
     ],
-    benefits: '90% of clients reported increased interview callbacks within 30 days',
-    process: [
-      'Schedule consultation with career expert',
-      'Provide work history and career goals',
-      'Receive tailored resume within 3 days',
-      'Collaborate on up to three revisions'
-    ]
+  },
+  {
+    id: 'resume-international',
+    title: 'International Resume',
+    icon: 'FaFileAlt',
+    description: 'Professional resume for global opportunities',
+    price: 500,
+    category: 'resume',
+    type: 'international',
+    features: [
+      'ATS-compliant resume',
+      'Optimized for international markets',
+      '3 rounds of revisions',
+      'Professional formatting',
+    ],
+  },
+  {
+    id: 'resume-package',
+    title: 'Complete Career Package',
+    icon: 'FaFileAlt',
+    description: 'Comprehensive package with ongoing support',
+    price: 1000,
+    category: 'resume',
+    type: 'package',
+    popular: true,
+    features: [
+      'Professional resume (Local or International)',
+      'Constant link updates for new positions',
+      'Private email addresses of hiring managers',
+      'Interview prep kit and guidance',
+      'General technical support during application period',
+      'Email support when contacting recruiters',
+      'Ongoing support throughout the process',
+    ],
+  },
+  {
+    id: 'cover-letter',
+    title: 'Cover Letter',
+    icon: 'FaEnvelope',
+    description: 'Professional cover letter tailored to your application',
+    price: 250,
+    category: 'cover-letter',
+    features: [
+      'Personalized content',
+      'Industry-specific language',
+      '2 rounds of revisions',
+      'Professional formatting',
+    ],
+  },
+  {
+    id: 'visa-application',
+    title: 'Visa Applications',
+    icon: 'FaPassport',
+    description: 'All visa categories and jurisdictions across the globe',
+    price: 1000,
+    category: 'visa',
+    features: [
+      'All visa categories',
+      'All jurisdictions worldwide',
+      'Step-by-step guidance',
+      'Documentation support',
+      'Application review',
+    ],
+    requiresDetails: true,
   },
   {
     id: 2,

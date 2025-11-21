@@ -142,10 +142,117 @@ const getPasswordResetTemplate = (resetLink) => `
   ${getFooterTemplate()}
 `;
 
+// Order confirmation template
+const getOrderConfirmationTemplate = (orderData) => `
+  ${getHeaderTemplate()}
+    <div style="padding: 30px; background-color: white;">
+      <h2 style="color: #0B444A; text-align: center;">Order Confirmation</h2>
+      <p style="color: #333;">Dear ${orderData.clientName},</p>
+      <p style="color: #333;">Thank you for choosing Career Solutions! We have received your order and are ready to proceed.</p>
+      
+      <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+        <h3 style="color: #0B444A; margin-top: 0;">Order Details:</h3>
+        <table style="width: 100%; color: #333;">
+          <tr><td><strong>Order Number:</strong></td><td>${orderData.orderNumber}</td></tr>
+          <tr><td><strong>Service:</strong></td><td>${orderData.serviceName}</td></tr>
+          <tr><td><strong>Amount:</strong></td><td>R${orderData.amount}</td></tr>
+          <tr><td><strong>Status:</strong></td><td>Pending Payment</td></tr>
+        </table>
+      </div>
+      
+      <p style="color: #333;">To complete your order, please proceed with payment. You will receive payment instructions shortly.</p>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment?orderNumber=${orderData.orderNumber}" style="background-color: #0B444A; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">Complete Payment</a>
+      </div>
+      
+      <p style="color: #333;">Best regards,<br>The Career Solutions Team</p>
+    </div>
+  ${getFooterTemplate()}
+`;
+
+// Payment confirmation template
+const getPaymentConfirmationTemplate = (paymentData) => {
+  let serviceInstructions = '';
+  
+  if (paymentData.serviceData) {
+    if (paymentData.serviceName.includes('Resume')) {
+      serviceInstructions = `
+        <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0B444A;">
+          <h3 style="color: #0B444A; margin-top: 0;">Next Steps for Your Resume Service:</h3>
+          <ol style="color: #333;">
+            <li>Please send us your current resume (if you have one) or your work history</li>
+            <li>Share your career goals and target positions</li>
+            <li>We will create your professional resume within 3-5 business days</li>
+            <li>You'll receive your resume for review and can request up to 3 revisions</li>
+          </ol>
+        </div>
+      `;
+    } else if (paymentData.serviceName.includes('Visa')) {
+      serviceInstructions = `
+        <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0B444A;">
+          <h3 style="color: #0B444A; margin-top: 0;">Next Steps for Your Visa Application:</h3>
+          <ol style="color: #333;">
+            <li>Our team will review your visa application details</li>
+            <li>We will contact you within 24 hours to discuss your specific requirements</li>
+            <li>You'll receive a checklist of required documents</li>
+            <li>We'll guide you through each step of the application process</li>
+          </ol>
+        </div>
+      `;
+    } else if (paymentData.serviceName.includes('Cover Letter')) {
+      serviceInstructions = `
+        <div style="background-color: #e8f5e9; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #0B444A;">
+          <h3 style="color: #0B444A; margin-top: 0;">Next Steps for Your Cover Letter:</h3>
+          <ol style="color: #333;">
+            <li>Please send us your resume and the job description</li>
+            <li>We will create a tailored cover letter within 2-3 business days</li>
+            <li>You'll receive your cover letter for review</li>
+            <li>You can request up to 2 revisions to perfect it</li>
+          </ol>
+        </div>
+      `;
+    }
+  }
+
+  return `
+    ${getHeaderTemplate()}
+      <div style="padding: 30px; background-color: white;">
+        <h2 style="color: #0B444A; text-align: center;">Payment Confirmed!</h2>
+        <p style="color: #333;">Dear ${paymentData.clientName},</p>
+        <p style="color: #333;">Thank you for your payment! Your order has been confirmed and we're ready to begin working on your service.</p>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #0B444A; margin-top: 0;">Order Details:</h3>
+          <table style="width: 100%; color: #333;">
+            <tr><td><strong>Order Number:</strong></td><td>${paymentData.orderNumber}</td></tr>
+            <tr><td><strong>Service:</strong></td><td>${paymentData.serviceName}</td></tr>
+            <tr><td><strong>Amount Paid:</strong></td><td>R${paymentData.amount}</td></tr>
+            <tr><td><strong>Payment Status:</strong></td><td>Confirmed</td></tr>
+          </table>
+        </div>
+        
+        ${serviceInstructions}
+        
+        <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
+          <h3 style="color: #0B444A; margin-top: 0;">Important Information:</h3>
+          <p style="color: #333; margin: 0;">Our team will contact you within 24 hours to begin your service. Please check your email regularly for updates.</p>
+        </div>
+        
+        <p style="color: #333;">If you have any questions, please don't hesitate to contact us via WhatsApp: +27 74 999 8812</p>
+        
+        <p style="color: #333;">Best regards,<br>The Career Solutions Team</p>
+      </div>
+    ${getFooterTemplate()}
+  `;
+};
+
 module.exports = {
   getWelcomeEmailTemplate,
   getBookingConfirmationTemplate,
   getEnquiryConfirmationTemplate,
   getAdminNotificationTemplate,
-  getPasswordResetTemplate
+  getPasswordResetTemplate,
+  getOrderConfirmationTemplate,
+  getPaymentConfirmationTemplate
 }; 
