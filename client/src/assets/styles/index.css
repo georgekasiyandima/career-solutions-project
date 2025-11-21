@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Reset default styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #07363c;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* Navigation Links */
+.nav-link {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #07363c;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #f5c518;
+}
+
+/* Buttons */
+button,
+.schedule-call-button,
+.subscribe-button {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+/* Decorative Taglines */
+.tagline {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #e4c19d;
+}
+
+/* Ensure logo image scales properly */
+.logo-image {
+  width: 200px;
+  height: auto;
+  display: block;
+}
+
+/* Main content padding to account for fixed header */
+.main-content {
+  padding-top: 230px; /* Match FAQ page */
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding-top: 210px;
+  }
+}

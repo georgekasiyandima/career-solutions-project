@@ -1,0 +1,59 @@
+/* global.css */
+
+/* Import Tailwind's base, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimal reset beyond Tailwind's preflight (if needed) */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Apply base font and styles to the entire app */
+  html,
+  body {
+    @apply font-poppins text-base leading-relaxed text-white; /* Changed from text-brandBeige to text-white */
+  }
+
+  /* Headings base styles */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins font-bold text-white leading-tight; /* Changed from text-brandGold to text-white */
+  }
+
+  /* Specific heading sizes */
+  h1 { @apply text-5xl; }
+  h2 { @apply text-4xl; }
+  h3 { @apply text-3xl; }
+  h4 { @apply text-2xl; }
+
+  /* Ensure buttons and links inherit the font */
+  p, li, button, a {
+    @apply font-poppins text-white; /* Changed from text-brandBeige to text-white */
+  }
+
+  button, a {
+    @apply font-medium;
+  }
+}
+
+/* Responsive adjustments for screens smaller than 768px */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 14px; /* Slightly smaller base font size for mobile */
+  }
+
+  h1 { @apply text-4xl; }
+  h2 { @apply text-3xl; }
+  h3 { @apply text-2xl; }
+  h4 { @apply text-xl; }
+
+  p, li, button, a {
+    @apply text-sm;
+  }
+}
