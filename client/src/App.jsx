@@ -15,6 +15,8 @@ import trackEvent from './services/trackEvent';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import WhatsAppWidget from './components/features/WhatsAppWidget';
 import SuccessStories from './components/pages/SuccessStories';
+import SocialIcons from './components/common/SocialIcons';
+import BackToTop from './components/common/BackToTop';
 //import Testimonials from './components/pages/Testimonials';
 import Hired from './components/pages/Hired';
 import AdminFeed from './components/pages/AdminFeed';
@@ -134,6 +136,8 @@ function AppContent() {
         </Box>
         {!isLoginPage && <Footer />}
         {!isLoginPage && <WhatsAppWidget />}
+        {!isLoginPage && <SocialIcons />}
+        {!isLoginPage && <BackToTop />}
       </ErrorBoundary>
     </Box>
   );

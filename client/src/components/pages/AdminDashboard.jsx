@@ -63,6 +63,9 @@ import {
 } from 'react-icons/fa';
 import { apiService } from '../../config/api';
 import { API_BASE_URL, STORAGE_KEYS } from '../../config/constants';
+import TestimonialsManagement from '../admin/TestimonialsManagement';
+import ContentUpdatesManagement from '../admin/ContentUpdatesManagement';
+import AnalyticsDashboard from '../admin/AnalyticsDashboard';
 
 const AdminDashboard = () => {
   const theme = useTheme();
@@ -492,7 +495,7 @@ const AdminDashboard = () => {
   return (
     <Box sx={{ 
       minHeight: '100vh', 
-      background: 'linear-gradient(135deg, #fafbfc 0%, #f7fafc 100%)', 
+      background: '#ffffff', 
       py: 4 
     }}>
       <Container maxWidth="xl">
@@ -536,6 +539,8 @@ const AdminDashboard = () => {
           >
             <Tab label="Overview" value="overview" />
             <Tab label="Analytics" value="analytics" />
+            <Tab label="Testimonials" value="testimonials" />
+            <Tab label="Content Updates" value="content" />
             <Tab label="System" value="system" />
             <Tab label="Users" value="users" />
           </Tabs>
@@ -669,30 +674,11 @@ const AdminDashboard = () => {
           </Box>
         )}
 
-        {activeTab === 'analytics' && (
-          <Box>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 600,
-                mb: 3,
-                color: theme.palette.text.primary,
-                fontSize: '1.125rem',
-              }}
-            >
-              Analytics Dashboard
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{
-                color: theme.palette.text.secondary,
-                fontSize: '0.875rem',
-              }}
-            >
-              Detailed analytics and reporting features coming soon.
-            </Typography>
-          </Box>
-        )}
+        {activeTab === 'analytics' && <AnalyticsDashboard />}
+
+        {activeTab === 'testimonials' && <TestimonialsManagement />}
+
+        {activeTab === 'content' && <ContentUpdatesManagement />}
 
         {activeTab === 'system' && (
           <Box>

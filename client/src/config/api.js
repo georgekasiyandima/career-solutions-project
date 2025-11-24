@@ -38,10 +38,12 @@ api.interceptors.response.use(
       return Promise.reject(new Error('Network error. Please check your connection or try again later.'));
     }
     const originalRequest = error.config;
+    // Don't try to refresh token on login endpoint failures
     if (
       error.response.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes('/auth/refresh')
+      !originalRequest.url.includes('/auth/refresh') &&
+      !originalRequest.url.includes('/auth/login')
     ) {
       originalRequest._retry = true;
       try {
@@ -61,9 +63,15 @@ api.interceptors.response.use(
 export const apiService = {
   // Authentication
   login: async (credentials) => {
-    const response = await api.post('/api/auth/login', credentials);
-    setAccessToken(response.data.accessToken);
-    return response.data;
+    try {
+      const response = await api.post('/api/auth/login', credentials);
+      setAccessToken(response.data.accessToken);
+      return response.data;
+    } catch (error) {
+      // Extract error message from response
+      const errorMessage = error.response?.data?.message || error.message || 'Login failed. Please check your credentials.';
+      throw new Error(errorMessage);
+    }
   },
   register: (userData) => api.post('/api/auth/register', userData),
   logout: async () => {
@@ -126,6 +134,20 @@ export const apiService = {
   getAdminUsers: () => api.get('/api/admin/users'),
   updateUserRole: (id, role) => api.put(`/api/admin/users/${id}/role`, { role }),
   getAdminDashboard: () => api.get('/api/admin/dashboard'),
+
+  // Testimonials Metrics
+  getTestimonialsMetrics: (params) => api.get('/api/testimonials-metrics', { params }),
+  getTestimonialsStats: () => api.get('/api/testimonials-metrics/stats'),
+  createTestimonial: (data) => api.post('/api/testimonials-metrics', data),
+  updateTestimonial: (id, data) => api.put(`/api/testimonials-metrics/${id}`, data),
+  deleteTestimonial: (id) => api.delete(`/api/testimonials-metrics/${id}`),
+
+  // Career Updates / Content Management
+  getCareerUpdates: (params) => api.get('/api/career-updates', { params }),
+  getCareerUpdate: (id) => api.get(`/api/career-updates/${id}`),
+  createCareerUpdate: (data) => api.post('/api/career-updates', data),
+  updateCareerUpdate: (id, data) => api.put(`/api/career-updates/${id}`, data),
+  deleteCareerUpdate: (id) => api.delete(`/api/career-updates/${id}`),
 };
 
 export default api;

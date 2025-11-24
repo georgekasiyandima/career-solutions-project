@@ -268,6 +268,8 @@ app.use("/api/interview-resources", require("./routes/interviewResources"));
 app.use("/api/testimonials", require("./routes/testimonials"));
 app.use("/api/services", require("./routes/services"));
 app.use("/api/service-orders", require("./routes/serviceOrders"));
+app.use("/api/testimonials-metrics", require("./routes/testimonialsMetrics"));
+app.use("/api/career-updates", require("./routes/careerUpdates"));
 app.use("/api/facts", require("./routes/facts"));
 
 // Protected routes
