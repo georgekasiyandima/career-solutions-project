@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaBuilding, FaMapMarkerAlt, FaClock, FaBriefcase, FaEnvelope, FaCalendarAlt } from 'react-icons/fa';
 import trackEvent from '../../services/trackEvent';
 
-const JobDetails = () => {
-  const { id } = useParams();
+const JobDetails = ({ jobId }) => {
+  const id = jobId;
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -92,7 +92,7 @@ const JobDetails = () => {
           <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-8">
             <p className="text-red-200 font-poppins">{error}</p>
             <Link 
-              to="/jobs"
+              href="/jobs"
               className="inline-block mt-4 bg-white/10 text-white px-6 py-3 rounded-xl hover:bg-white/20 transition-colors font-poppins"
             >
               Back to Jobs
@@ -116,7 +116,7 @@ const JobDetails = () => {
             <h3 className="text-xl font-bold text-white font-poppins mb-2">Job not found</h3>
             <p className="text-white/80 font-poppins mb-4">The job you're looking for doesn't exist or has been removed.</p>
             <Link 
-              to="/jobs"
+              href="/jobs"
               className="inline-block bg-white/10 text-white px-6 py-3 rounded-xl hover:bg-white/20 transition-colors font-poppins"
             >
               Back to Jobs
@@ -139,7 +139,7 @@ const JobDetails = () => {
           transition={{ duration: 0.6 }}
         >
           <Link 
-            to="/jobs"
+            href="/jobs"
             className="inline-flex items-center space-x-2 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-colors font-poppins"
           >
             <FaArrowLeft />
@@ -246,14 +246,14 @@ const JobDetails = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
-              to="/enquiry"
+              href="/enquiry"
               className="bg-white text-brandDarkTeal px-8 py-4 rounded-xl hover:bg-gray-100 transition-colors font-poppins font-semibold text-center flex items-center justify-center space-x-2"
             >
               <FaEnvelope />
               <span>Enquire About This Job</span>
             </Link>
             <Link 
-              to="/booking"
+              href="/booking"
               className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-xl hover:bg-white/20 transition-colors font-poppins font-semibold text-center flex items-center justify-center space-x-2"
             >
               <FaCalendarAlt />

@@ -184,6 +184,7 @@ const InterviewTips = () => {
             {resources.map(resource => (
               <Grid item xs={12} sm={6} md={4} key={resource.id}>
                 <Card
+                  elevation={4}
                   sx={{
                     opacity: 0,
                     animation: 'fadeIn 0.6s ease-out forwards',
@@ -191,20 +192,17 @@ const InterviewTips = () => {
                       '0%': { opacity: 0, transform: 'translateY(20px)' },
                       '100%': { opacity: 1, transform: 'translateY(0)' },
                     },
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    borderRadius: 3,
+                    transition: 'transform 0.2s, box-shadow 0.2s',
+                    '&:hover': {
+                      transform: 'translateY(-4px) scale(1.02)',
+                      boxShadow: 8,
+                    },
+                    bgcolor: 'background.paper',
                   }}
-                    elevation={4}
-                    sx={{
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      borderRadius: 3,
-                      transition: 'transform 0.2s, box-shadow 0.2s',
-                      '&:hover': {
-                        transform: 'translateY(-4px) scale(1.02)',
-                        boxShadow: 8,
-                      },
-                      bgcolor: 'background.paper',
-                    }}
                   >
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Stack direction="row" spacing={1} alignItems="center" mb={1}>

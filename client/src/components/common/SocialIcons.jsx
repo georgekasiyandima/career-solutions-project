@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, IconButton, Tooltip } from '@mui/material';
-import { FaLinkedin, FaTwitter, FaFacebook, FaYoutube, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import { FaLinkedin, FaFacebook, FaYoutube, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import XIcon from './XIcon';
 import { useTheme } from '@mui/material/styles';
 
 const SocialIcons = () => {
@@ -14,10 +15,10 @@ const SocialIcons = () => {
       color: '#0077b5'
     },
     { 
-      icon: FaTwitter, 
+      icon: XIcon, 
       href: 'https://twitter.com/gbjobmarket', 
-      label: 'Twitter',
-      color: '#1DA1F2'
+      label: 'X (Twitter)',
+      color: '#000000'
     },
     { 
       icon: FaFacebook, 
@@ -87,7 +88,11 @@ const SocialIcons = () => {
             }}
             aria-label={social.label}
           >
-            <social.icon size={20} />
+            {social.icon === XIcon ? (
+              <social.icon size={20} color="#ffffff" />
+            ) : (
+              <social.icon size={20} />
+            )}
           </IconButton>
         </Tooltip>
       ))}

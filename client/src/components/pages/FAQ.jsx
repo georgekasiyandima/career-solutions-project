@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Accordion, AccordionSummary, AccordionDetails, TextField, Grid, Button, Typography, Box, IconButton, CircularProgress, Alert } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -7,7 +7,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { API_BASE_URL } from '../../config/constants';
 
 const FAQ = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [faqs, setFaqs] = useState([]);
@@ -65,8 +65,8 @@ const FAQ = () => {
   }, []);
 
   const handleContactUs = useCallback(() => {
-    navigate('/enquiry');
-  }, [navigate]);
+    router.push('/enquiry');
+  }, [router]);
 
   return (
     <Box sx={{ py: 10, px: { xs: 2, sm: 4 }, bgcolor: 'linear-gradient(135deg, #004d40 0%, #2E7D32 100%)', minHeight: '100vh' }}>

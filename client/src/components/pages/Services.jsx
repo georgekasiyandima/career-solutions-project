@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { 
   Box,
   Container,
@@ -155,7 +157,7 @@ const steps = ['Select Service', 'Provide Details', 'Review & Pay', 'Confirmatio
 
 const Services = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [selectedService, setSelectedService] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -239,7 +241,7 @@ const Services = () => {
       const response = await apiService.createServiceOrder(orderData);
       
       // Redirect to payment page with order number
-      navigate(`/payment?orderNumber=${response.data.orderNumber}&amount=${selectedService.price}`);
+      router.push(`/payment?orderNumber=${response.data.orderNumber}&amount=${selectedService.price}`);
     } catch (err) {
       setError(err.message || 'Failed to create order. Please try again.');
       setLoading(false);

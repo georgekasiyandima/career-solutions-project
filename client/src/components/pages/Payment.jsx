@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   Box,
   Container,
@@ -26,7 +28,7 @@ import { apiService } from '../../config/api';
 
 const Payment = () => {
   const theme = useTheme();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchParams] = useSearchParams();
   const orderNumber = searchParams.get('orderNumber');
   const amount = searchParams.get('amount');
@@ -95,7 +97,7 @@ const Payment = () => {
         
         // Redirect after 5 seconds
         setTimeout(() => {
-          navigate('/services?payment=pending');
+          router.push('/services?payment=pending');
         }, 5000);
       } else {
         setError('Order not found');

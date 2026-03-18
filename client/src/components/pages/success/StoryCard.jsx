@@ -16,7 +16,7 @@ import {
   CheckCircle,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   background: 'linear-gradient(135deg, #1A3C34 0%, #4CAF50 100%)',
@@ -210,7 +210,7 @@ const StoryCard = ({ story }) => {
 
         <Button
           component={Link}
-          to="/booking"
+          href="/booking"
           variant="contained"
           fullWidth
           endIcon={<ArrowForward />}

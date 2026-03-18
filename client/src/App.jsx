@@ -13,7 +13,6 @@ import Feed from './components/features/Feed';
 import JobDetails from './components/features/JobDetails';
 import trackEvent from './services/trackEvent';
 import ErrorBoundary from './components/common/ErrorBoundary';
-import WhatsAppWidget from './components/features/WhatsAppWidget';
 import SuccessStories from './components/pages/SuccessStories';
 import SocialIcons from './components/common/SocialIcons';
 import BackToTop from './components/common/BackToTop';
@@ -135,7 +134,6 @@ function AppContent() {
           </Suspense>
         </Box>
         {!isLoginPage && <Footer />}
-        {!isLoginPage && <WhatsAppWidget />}
         {!isLoginPage && <SocialIcons />}
         {!isLoginPage && <BackToTop />}
       </ErrorBoundary>

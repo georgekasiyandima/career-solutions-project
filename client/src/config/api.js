@@ -64,12 +64,40 @@ export const apiService = {
   // Authentication
   login: async (credentials) => {
     try {
+      console.log('Attempting login to:', `${API_BASE_URL}/api/auth/login`);
       const response = await api.post('/api/auth/login', credentials);
       setAccessToken(response.data.accessToken);
       return response.data;
     } catch (error) {
+      console.error('Login error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        url: error.config?.url,
+        baseURL: error.config?.baseURL,
+        fullURL: `${error.config?.baseURL}${error.config?.url}`
+      });
+      
       // Extract error message from response
-      const errorMessage = error.response?.data?.message || error.message || 'Login failed. Please check your credentials.';
+      let errorMessage = 'Login failed. Please check your credentials.';
+      
+      if (error.response) {
+        // Server responded with error status
+        if (error.response.status === 404) {
+          errorMessage = 'Login endpoint not found. Please ensure the backend server is running on port 5000.';
+        } else if (error.response.status === 401) {
+          errorMessage = error.response.data?.message || 'Invalid email or password.';
+        } else {
+          errorMessage = error.response.data?.message || `Server error (${error.response.status}). Please try again.`;
+        }
+      } else if (error.request) {
+        // Request was made but no response received
+        errorMessage = 'Unable to connect to the server. Please ensure the backend server is running on http://localhost:5000';
+      } else {
+        // Error setting up the request
+        errorMessage = error.message || 'An error occurred during login.';
+      }
+      
       throw new Error(errorMessage);
     }
   },

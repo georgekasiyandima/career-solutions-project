@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { Box, Avatar, Typography, Paper, Button, Menu, MenuItem } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 // Use authenticated user data from context
 
 const Profile = () => {
   const { user: authUser, logout } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [adminMenuAnchor, setAdminMenuAnchor] = useState(null);
   const handleAdminMenuOpen = (event) => setAdminMenuAnchor(event.currentTarget);
   const handleAdminMenuClose = () => setAdminMenuAnchor(null);
 
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    router.push('/');
   };
 
   return (
@@ -50,10 +50,10 @@ const Profile = () => {
               anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
               transformOrigin={{ vertical: 'top', horizontal: 'left' }}
             >
-              <MenuItem component={NavLink} to="/admin" onClick={handleAdminMenuClose}>Dashboard</MenuItem>
-              <MenuItem component={NavLink} to="/admin/analytics" onClick={handleAdminMenuClose}>Analytics</MenuItem>
-              <MenuItem component={NavLink} to="/admin/users" onClick={handleAdminMenuClose}>User Management</MenuItem>
-              <MenuItem component={NavLink} to="/admin/content" onClick={handleAdminMenuClose}>Content Manager</MenuItem>
+              <MenuItem component={Link} href="/admin" onClick={handleAdminMenuClose}>Dashboard</MenuItem>
+              <MenuItem component={Link} href="/admin/analytics" onClick={handleAdminMenuClose}>Analytics</MenuItem>
+              <MenuItem component={Link} href="/admin/users" onClick={handleAdminMenuClose}>User Management</MenuItem>
+              <MenuItem component={Link} href="/admin/content" onClick={handleAdminMenuClose}>Content Manager</MenuItem>
               {/* Add more as needed */}
             </Menu>
           </>

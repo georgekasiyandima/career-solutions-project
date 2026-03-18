@@ -1,4 +1,7 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { 
@@ -47,7 +50,8 @@ import WarningIcon from '@mui/icons-material/Warning';
 import FocusTrap from 'focus-trap-react';
 
 const Header = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { user, logout, isAuthenticated } = useAuth();
@@ -69,7 +73,7 @@ const Header = () => {
   const handleLogout = async () => {
     await logout();
     setAdminMenuAnchor(null);
-    navigate('/');
+    router.push('/');
   };
 
   const userRole = user ? user.role : null;
@@ -183,8 +187,8 @@ const Header = () => {
         <Toolbar sx={{ px: { xs: 0 }, minHeight: 64 }}>
           {/* Logo */}
           <Box
-            component={NavLink}
-            to="/"
+            component={Link}
+            href="/"
             sx={{
               display: 'flex',
               alignItems: 'center',
@@ -220,29 +224,31 @@ const Header = () => {
           {/* Desktop Navigation */}
           {!isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-              {navigationItems.map((item) => (
-                <Button
-                  key={item.to}
-                  component={NavLink}
-                  to={item.to}
-                  sx={{
-                    color: isScrolled ? theme.palette.text.primary : '#ffffff',
-                    mx: 1,
-                    fontFamily: '"Josefin Sans", sans-serif',
-                    fontWeight: 500,
-                    transition: 'all 0.3s ease-in-out',
-                    '&.active': {
-                      color: theme.palette.primary.main,
+              {navigationItems.map((item) => {
+                const isActive = pathname === item.to;
+                return (
+                  <Button
+                    key={item.to}
+                    component={Link}
+                    href={item.to}
+                    sx={{
+                      color: isActive 
+                        ? theme.palette.primary.main 
+                        : (isScrolled ? theme.palette.text.primary : '#ffffff'),
+                      mx: 1,
+                      fontFamily: '"Josefin Sans", sans-serif',
+                      fontWeight: isActive ? 600 : 500,
+                      transition: 'all 0.3s ease-in-out',
                       backgroundColor: 'transparent',
-                    },
-                    '&:hover': {
-                      backgroundColor: isScrolled ? 'rgba(11, 68, 74, 0.08)' : 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
+                      '&:hover': {
+                        backgroundColor: isScrolled ? 'rgba(11, 68, 74, 0.08)' : 'rgba(255, 255, 255, 0.1)',
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                );
+              })}
             </Box>
           )}
 
@@ -286,8 +292,8 @@ const Header = () => {
                   </Button>
                 )}
                 <Button
-                  component={NavLink}
-                  to="/profile"
+                  component={Link}
+                  href="/profile"
                   sx={{
                     color: isScrolled ? theme.palette.text.primary : '#ffffff',
                     mr: 1,
@@ -317,8 +323,8 @@ const Header = () => {
               </Box>
             ) : (
               <Button
-                component={NavLink}
-                to="/login"
+                component={Link}
+                href="/login"
                 variant="contained"
                 startIcon={<LoginIcon />}
                 sx={{
@@ -361,19 +367,19 @@ const Header = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem component={NavLink} to="/admin" onClick={handleAdminMenuClose}>
+        <MenuItem component={Link} href="/admin" onClick={handleAdminMenuClose}>
           <DashboardIcon sx={{ mr: 1 }} />
           Dashboard
         </MenuItem>
-        <MenuItem component={NavLink} to="/admin/analytics" onClick={handleAdminMenuClose}>
+        <MenuItem component={Link} href="/admin/analytics" onClick={handleAdminMenuClose}>
           <BarChartIcon sx={{ mr: 1 }} />
           Analytics
         </MenuItem>
-        <MenuItem component={NavLink} to="/admin/users" onClick={handleAdminMenuClose}>
+        <MenuItem component={Link} href="/admin/users" onClick={handleAdminMenuClose}>
           <GroupIcon sx={{ mr: 1 }} />
           Users
         </MenuItem>
-        <MenuItem component={NavLink} to="/admin/content" onClick={handleAdminMenuClose}>
+        <MenuItem component={Link} href="/admin/content" onClick={handleAdminMenuClose}>
           <ArticleIcon sx={{ mr: 1 }} />
           Content
         </MenuItem>
@@ -485,34 +491,35 @@ const Header = () => {
               </IconButton>
             </Box>
             <List sx={{ pt: 0 }}>
-              {navigationItems.map((item) => (
-                <ListItem key={item.to} disablePadding>
-                  <ListItemButton
-                    component={NavLink}
-                    to={item.to}
-                    onClick={handleDrawerClose}
-                    sx={{
-                      '&.active': {
-                        backgroundColor: 'rgba(37, 99, 235, 0.08)',
-                        color: theme.palette.primary.main,
-                      },
-                    }}
-                  >
-                    <ListItemText primary={item.label} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              {navigationItems.map((item) => {
+                const isActive = pathname === item.to;
+                return (
+                  <ListItem key={item.to} disablePadding>
+                    <ListItemButton
+                      component={Link}
+                      href={item.to}
+                      onClick={handleDrawerClose}
+                      sx={{
+                        backgroundColor: isActive ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                        color: isActive ? theme.palette.primary.main : 'inherit',
+                      }}
+                    >
+                      <ListItemText primary={item.label} />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
               <Divider />
               {isAuthenticated ? (
                 <>
                   <ListItem disablePadding>
-                    <ListItemButton component={NavLink} to="/profile" onClick={handleDrawerClose}>
+                    <ListItemButton component={Link} href="/profile" onClick={handleDrawerClose}>
                       <ListItemText primary="Profile" />
                     </ListItemButton>
                   </ListItem>
                   {userRole === 'admin' && (
                     <ListItem disablePadding>
-                      <ListItemButton component={NavLink} to="/admin" onClick={handleDrawerClose}>
+                      <ListItemButton component={Link} href="/admin" onClick={handleDrawerClose}>
                         <ListItemText primary="Admin Dashboard" />
                       </ListItemButton>
                     </ListItem>
@@ -525,7 +532,7 @@ const Header = () => {
                 </>
               ) : (
                 <ListItem disablePadding>
-                  <ListItemButton component={NavLink} to="/login" onClick={handleDrawerClose}>
+                  <ListItemButton component={Link} href="/login" onClick={handleDrawerClose}>
                     <ListItemText primary="Login" />
                   </ListItemButton>
                 </ListItem>

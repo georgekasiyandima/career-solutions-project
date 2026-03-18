@@ -1,5 +1,7 @@
-import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+'use client';
+
+import React, { useCallback, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { 
   Box, 
   Typography, 
@@ -8,18 +10,26 @@ import {
   useTheme, 
   Stack
 } from '@mui/material';
+import { motion } from 'framer-motion';
+import CountUp from 'react-countup';
+import VisibilitySensor from 'react-visibility-sensor';
 
 const HeroSection = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const theme = useTheme();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   const handleGetStarted = useCallback(() => {
-    navigate('/enquiry');
-  }, [navigate]);
+    router.push('/enquiry');
+  }, [router]);
 
   const handleViewJobs = useCallback(() => {
-    navigate('/jobs');
-  }, [navigate]);
+    router.push('/jobs');
+  }, [router]);
 
   return (
     <Box
@@ -75,179 +85,251 @@ const HeroSection = () => {
             py: { xs: 8, md: 12 },
           }}
         >
-          {/* Main Heading */}
-          <Typography
-            variant="h1"
-            sx={{
-              fontSize: { xs: '2.5rem', md: '4rem', lg: '4.5rem' },
-              fontWeight: 700,
-              color: '#ffffff',
-              mb: 3,
-              lineHeight: 1.1,
-              fontFamily: '"Josefin Sans", sans-serif',
-              textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
-            }}
+          {/* Main Heading with Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            Find Your Dream
-            <Box component="span" sx={{ color: '#EAEBF0', display: 'block' }}>
-              Career Abroad
-            </Box>
-          </Typography>
-
-          {/* Subtitle */}
-          <Typography
-            variant="h5"
-            sx={{
-              color: 'rgba(255, 255, 255, 0.95)',
-              mb: 4,
-              maxWidth: '700px',
-              fontWeight: 400,
-              lineHeight: 1.6,
-              fontFamily: '"Josefin Sans", sans-serif',
-              fontSize: { xs: '1.1rem', md: '1.3rem' },
-              textShadow: '0 1px 5px rgba(0, 0, 0, 0.2)',
-            }}
-          >
-            Connect with global opportunities in cruise ships, logistics, and international markets. 
-            Professional guidance to launch your international career.
-          </Typography>
-
-          {/* CTA Buttons */}
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={2}
-            sx={{ mb: 6 }}
-          >
-            <Button
-              variant="contained"
-              size="large"
-              onClick={handleGetStarted}
+            <Typography
+              variant="h1"
               sx={{
-                backgroundColor: '#0B444A',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
-                fontWeight: 600,
-                fontFamily: '"Josefin Sans", sans-serif',
+                fontSize: { xs: '2.5rem', md: '4rem', lg: '4.5rem' },
+                fontWeight: 700,
                 color: '#ffffff',
-                boxShadow: '0 4px 12px rgba(11, 68, 74, 0.4)',
-                '&:hover': {
-                  backgroundColor: '#0F464B',
-                  boxShadow: '0 6px 16px rgba(11, 68, 74, 0.5)',
-                },
+                mb: 3,
+                lineHeight: 1.1,
+                fontFamily: '"Josefin Sans", sans-serif',
+                textShadow: '0 2px 10px rgba(0, 0, 0, 0.3)',
               }}
             >
-              Get Started
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              onClick={handleViewJobs}
+              Find Your Dream
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={isVisible ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+                style={{ color: '#EAEBF0', display: 'block' }}
+              >
+                Career Abroad
+              </motion.span>
+            </Typography>
+          </motion.div>
+
+          {/* Subtitle with Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+          >
+            <Typography
+              variant="h5"
               sx={{
-                borderColor: '#ffffff',
-                borderWidth: 2,
-                color: '#ffffff',
-                px: 4,
-                py: 1.5,
-                fontSize: '1.1rem',
-                fontWeight: 600,
+                color: 'rgba(255, 255, 255, 0.95)',
+                mb: 4,
+                maxWidth: '700px',
+                fontWeight: 400,
+                lineHeight: 1.6,
                 fontFamily: '"Josefin Sans", sans-serif',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  borderColor: '#EAEBF0',
-                  borderWidth: 2,
-                },
+                fontSize: { xs: '1.1rem', md: '1.3rem' },
+                textShadow: '0 1px 5px rgba(0, 0, 0, 0.2)',
               }}
             >
-              View Jobs
-            </Button>
-          </Stack>
+              Connect with global opportunities in cruise ships, logistics, and international markets. 
+              Professional guidance to launch your international career.
+            </Typography>
+          </motion.div>
 
-          {/* Stats */}
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              gap: { xs: 3, md: 6 },
-              mt: 4,
-            }}
+          {/* CTA Buttons with Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.7, ease: 'easeOut' }}
           >
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                  color: '#ffffff',
-                  mb: 0.5,
-                  fontFamily: '"Josefin Sans", sans-serif',
-                  textShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
-                }}
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={2}
+              sx={{ mb: 6 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                500+
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  fontWeight: 500,
-                  fontFamily: '"Josefin Sans", sans-serif',
-                }}
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleGetStarted}
+                  sx={{
+                    backgroundColor: '#0B444A',
+                    px: 4,
+                    py: 1.5,
+                    fontSize: '1.1rem',
+                    fontWeight: 600,
+                    fontFamily: '"Josefin Sans", sans-serif',
+                    color: '#ffffff',
+                    boxShadow: '0 4px 12px rgba(11, 68, 74, 0.4)',
+                    '&:hover': {
+                      backgroundColor: '#0F464B',
+                      boxShadow: '0 6px 16px rgba(11, 68, 74, 0.5)',
+                    },
+                  }}
+                >
+                  Get Started
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Successful Placements
-              </Typography>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={handleViewJobs}
+                  sx={{
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    color: '#ffffff',
+                    px: 4,
+                    py: 1.5,
+                    fontSize: '1.1rem',
+                    fontWeight: 600,
+                    fontFamily: '"Josefin Sans", sans-serif',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backdropFilter: 'blur(10px)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      borderColor: '#EAEBF0',
+                      borderWidth: 2,
+                    },
+                  }}
+                >
+                  View Jobs
+                </Button>
+              </motion.div>
+            </Stack>
+          </motion.div>
+
+          {/* Stats with Animation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.9, ease: 'easeOut' }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                gap: { xs: 3, md: 6 },
+                mt: 4,
+              }}
+            >
+              <VisibilitySensor active={isVisible} delayedCall>
+                {({ isVisible: isStatVisible }) => (
+                  <>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            mb: 0.5,
+                            fontFamily: '"Josefin Sans", sans-serif',
+                            textShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+                          }}
+                        >
+                          {isStatVisible ? (
+                            <CountUp end={500} duration={2.5} suffix="+" />
+                          ) : (
+                            '0+'
+                          )}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontWeight: 500,
+                            fontFamily: '"Josefin Sans", sans-serif',
+                          }}
+                        >
+                          Successful Placements
+                        </Typography>
+                      </Box>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            mb: 0.5,
+                            fontFamily: '"Josefin Sans", sans-serif',
+                            textShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+                          }}
+                        >
+                          {isStatVisible ? (
+                            <CountUp end={50} duration={2.5} suffix="+" />
+                          ) : (
+                            '0+'
+                          )}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontWeight: 500,
+                            fontFamily: '"Josefin Sans", sans-serif',
+                          }}
+                        >
+                          Partner Companies
+                        </Typography>
+                      </Box>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ type: 'spring', stiffness: 300 }}
+                    >
+                      <Box sx={{ textAlign: 'center' }}>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            fontWeight: 700,
+                            color: '#ffffff',
+                            mb: 0.5,
+                            fontFamily: '"Josefin Sans", sans-serif',
+                            textShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
+                          }}
+                        >
+                          {isStatVisible ? (
+                            <CountUp end={95} duration={2.5} suffix="%" />
+                          ) : (
+                            '0%'
+                          )}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                            fontWeight: 500,
+                            fontFamily: '"Josefin Sans", sans-serif',
+                          }}
+                        >
+                          Success Rate
+                        </Typography>
+                      </Box>
+                    </motion.div>
+                  </>
+                )}
+              </VisibilitySensor>
             </Box>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                  color: '#ffffff',
-                  mb: 0.5,
-                  fontFamily: '"Josefin Sans", sans-serif',
-                  textShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                50+
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  fontWeight: 500,
-                  fontFamily: '"Josefin Sans", sans-serif',
-                }}
-              >
-                Partner Companies
-              </Typography>
-            </Box>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography
-                variant="h4"
-                sx={{
-                  fontWeight: 700,
-                  color: '#ffffff',
-                  mb: 0.5,
-                  fontFamily: '"Josefin Sans", sans-serif',
-                  textShadow: '0 2px 5px rgba(0, 0, 0, 0.3)',
-                }}
-              >
-                95%
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  fontWeight: 500,
-                  fontFamily: '"Josefin Sans", sans-serif',
-                }}
-              >
-                Success Rate
-              </Typography>
-            </Box>
-          </Box>
+          </motion.div>
         </Box>
       </Container>
     </Box>

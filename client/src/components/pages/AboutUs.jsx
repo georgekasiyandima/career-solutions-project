@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
 import { 
   Box,
   Container,
@@ -12,7 +15,8 @@ import {
   Stack,
   Divider
 } from '@mui/material';
-import { FaLinkedin, FaTwitter, FaBullseye, FaHeart, FaUsers, FaRocket, FaStar, FaShieldAlt, FaHandshake, FaGlobe } from 'react-icons/fa';
+import { FaLinkedin, FaBullseye, FaHeart, FaUsers, FaRocket, FaStar, FaShieldAlt, FaHandshake, FaGlobe, FaShip } from 'react-icons/fa';
+import XIcon from '../common/XIcon';
 
 const AboutUs = () => {
   return (
@@ -215,7 +219,7 @@ const AboutUs = () => {
                     textAlign: 'center',
                     height: '100%'
                   }}>
-                    <FaRocket style={{ fontSize: 32, color: '#0B444A', marginBottom: 12 }} />
+                    <FaShip style={{ fontSize: 32, color: '#0B444A', marginBottom: 12 }} />
                     <Typography variant="h6" sx={{ fontWeight: 600, color: '#0B444A', mb: 1, fontFamily: '"Josefin Sans", sans-serif' }}>
                       Cruise Ship Careers
                     </Typography>
@@ -381,7 +385,7 @@ const AboutUs = () => {
                         '&:hover': { backgroundColor: 'rgba(11, 68, 74, 0.2)' }
                       }}
                     >
-                      <FaTwitter style={{ fontSize: 16, color: '#0B444A' }} />
+                      <XIcon size={16} color="#0B444A" />
                     </Button>
                   </Stack>
                 </CardContent>
@@ -490,7 +494,7 @@ const AboutUs = () => {
                         '&:hover': { backgroundColor: 'rgba(11, 68, 74, 0.2)' }
                       }}
                     >
-                      <FaTwitter style={{ fontSize: 16, color: '#0B444A' }} />
+                      <XIcon size={16} color="#0B444A" />
                     </Button>
                   </Stack>
                 </CardContent>
@@ -742,6 +746,7 @@ const AboutUs = () => {
               
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} justifyContent="center">
                 <Button
+                  component={Link}
                   href="/services"
                   variant="contained"
                   sx={{ 
@@ -758,6 +763,7 @@ const AboutUs = () => {
                   Explore Our Services
                 </Button>
                 <Button
+                  component={Link}
                   href="/jobs"
                   variant="outlined"
                   sx={{ 

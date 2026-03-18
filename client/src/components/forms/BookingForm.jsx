@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +15,8 @@ const BookingForm = () => {
   const [errors, setErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const navigate = useNavigate();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,7 +75,7 @@ const BookingForm = () => {
         message: ''
       });
       setErrors({});
-      setTimeout(() => navigate('/'), 3000);
+      setTimeout(() => router.push('/'), 3000);
     } catch (err) {
       setSubmitStatus('error');
       console.error('Booking error:', err);

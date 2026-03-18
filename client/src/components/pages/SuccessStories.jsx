@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import CountUp from "react-countup";
 import VisibilitySensor from "react-visibility-sensor";
 import {
@@ -429,7 +429,7 @@ const SuccessStories = ({ isHomePage = false }) => {
           <Box sx={{ textAlign: "center", mt: 4 }}>
             <Button
               component={Link}
-              to="/success-stories"
+              href="/success-stories"
               variant="contained"
               size="large"
               endIcon={<ArrowForward />}

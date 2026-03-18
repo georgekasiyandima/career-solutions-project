@@ -1,5 +1,5 @@
 // API Configuration
-export const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+export const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:5000';
 export const API_BASE_URL = BACKEND_URL; // Removed extra /api
 export const API_ENDPOINTS = {
   USERS: '/api/users',

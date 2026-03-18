@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   Box, 
@@ -110,18 +111,18 @@ const AdminDashboard = () => {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [refreshInterval, setRefreshInterval] = useState(30000); // 30 seconds
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (!isAuthenticated) {
       console.log('User not authenticated, redirecting to login');
-      navigate('/login');
+      router.push('/login');
       return;
     }
     
     if (user?.role !== 'admin') {
       console.log('User does not have admin role:', user?.role);
-      navigate('/');
+      router.push('/');
       return;
     }
 
@@ -133,7 +134,7 @@ const AdminDashboard = () => {
     }, refreshInterval);
 
     return () => clearInterval(interval);
-  }, [refreshInterval, isAuthenticated, user, navigate]);
+  }, [refreshInterval, isAuthenticated, user, router]);
 
   const fetchDashboardData = async () => {
     try {
@@ -144,10 +145,19 @@ const AdminDashboard = () => {
       const response = await apiService.getAdminDashboard();
       console.log('Dashboard response:', response);
 
-      setDashboardData(response.data);
+      if (response && response.data) {
+        setDashboardData(response.data);
+      } else {
+        throw new Error('Invalid response format from server');
+      }
     } catch (err) {
       console.error('Dashboard fetch error:', err);
-      setError('Failed to fetch dashboard data');
+      const errorMessage = err.response?.status === 404 
+        ? 'Dashboard endpoint not found. Please ensure you are authenticated and the backend server is running.'
+        : err.response?.status === 401
+        ? 'Authentication required. Please log in again.'
+        : err.response?.data?.message || err.message || 'Failed to fetch dashboard data';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -617,7 +627,7 @@ const AdminDashboard = () => {
                   description="Create new user account"
                   icon={FaPlus}
                   color={theme.palette.primary.main}
-                  action={() => navigate('/admin/users/add')}
+                  action={() => router.push('/admin/users/add')}
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -644,7 +654,7 @@ const AdminDashboard = () => {
                   description="Broadcast message to users"
                   icon={FaBell}
                   color={theme.palette.warning.main}
-                  action={() => navigate('/admin/notifications')}
+                  action={() => router.push('/admin/notifications')}
                 />
               </Grid>
             </Grid>

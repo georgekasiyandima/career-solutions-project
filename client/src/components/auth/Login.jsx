@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '../../context/AuthContext';
 import {
   Container,
@@ -34,7 +34,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { login } = useAuth();
   const emailInputRef = React.useRef();
 
@@ -67,8 +67,8 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(response.user));
       if (rememberMe) localStorage.setItem(REMEMBER_ME_KEY, formData.email);
       else localStorage.removeItem(REMEMBER_ME_KEY);
-      if (response.user?.role === 'admin' || response.user?.role === 'manager') navigate('/admin');
-      else navigate('/');
+      if (response.user?.role === 'admin' || response.user?.role === 'manager') router.push('/admin');
+      else router.push('/');
     } catch (err) {
       setError(err.message || 'Login failed. Please check your credentials or connection.');
     } finally {
@@ -234,7 +234,7 @@ const Login = () => {
                   component="button"
                   variant="body2"
                   color="primary"
-                  onClick={() => navigate('/forgot-password')}
+                  onClick={() => router.push('/forgot-password')}
                   underline="hover"
                   sx={{ fontWeight: 600 }}
                   aria-label="Forgot password"
@@ -317,7 +317,7 @@ const Login = () => {
                 component="button"
                 variant="body2"
                 color="primary"
-                onClick={() => navigate('/register')}
+                onClick={() => router.push('/register')}
                 underline="hover"
                 sx={{ fontWeight: 600 }}
                 aria-label="Contact administrator"

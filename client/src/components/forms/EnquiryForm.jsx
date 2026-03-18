@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   Container,
@@ -46,16 +48,15 @@ const EnquiryForm = () => {
   const [submitMessage, setSubmitMessage] = useState('');
   const [submitStatus, setSubmitStatus] = useState(''); // 'success' or 'error'
 
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const navigate = useNavigate();
-  const location = useLocation();
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const theme = useTheme();
 
   // Get service and package from URL params
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const service = params.get('service');
-    const packageName = params.get('package');
+    const service = searchParams.get('service');
+    const packageName = searchParams.get('package');
     
     if (service) {
       setFormData(prev => ({ ...prev, service }));
@@ -124,7 +125,7 @@ const EnquiryForm = () => {
         service: formData.service,
         package: formData.package
       });
-      setTimeout(() => navigate('/'), 5000);
+      setTimeout(() => router.push('/'), 5000);
     } catch (err) {
       setSubmitStatus('error');
       setSubmitMessage('An error occurred while submitting your enquiry. Please try again or contact us directly.');

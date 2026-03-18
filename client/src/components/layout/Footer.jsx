@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { 
   Box, 
   Container, 
@@ -13,7 +15,8 @@ import {
   useTheme,
   Alert
 } from '@mui/material';
-import { FaEnvelope, FaPhone, FaLinkedin, FaTwitter, FaFacebook, FaYoutube, FaArrowRight, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaLinkedin, FaFacebook, FaYoutube, FaArrowRight, FaInstagram, FaTiktok, FaWhatsapp } from 'react-icons/fa';
+import XIcon from '../common/XIcon';
 import { apiService } from '../../config/api';
 
 const Footer = () => {
@@ -73,7 +76,7 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: FaLinkedin, href: 'https://linkedin.com/company/gbjobmarket', label: 'LinkedIn' },
-    { icon: FaTwitter, href: 'https://twitter.com/gbjobmarket', label: 'Twitter' },
+    { icon: XIcon, href: 'https://twitter.com/gbjobmarket', label: 'X (Twitter)' },
     { icon: FaFacebook, href: 'https://facebook.com/gbjobmarket', label: 'Facebook' },
     { icon: FaYoutube, href: 'https://youtube.com', label: 'YouTube' },
     { icon: FaInstagram, href: 'https://instagram.com', label: 'Instagram' },
@@ -127,7 +130,11 @@ const Footer = () => {
                     },
                   }}
                 >
-                  <social.icon />
+                  {social.icon === XIcon ? (
+                    <social.icon size={20} color="rgba(255, 255, 255, 0.8)" />
+                  ) : (
+                    <social.icon />
+                  )}
                 </IconButton>
               ))}
             </Stack>
@@ -142,7 +149,7 @@ const Footer = () => {
               {quickLinks.map((link) => (
                 <Link
                   key={link.to}
-                  to={link.to}
+                  href={link.to}
                   style={{
                     textDecoration: 'none',
                     color: 'rgba(255, 255, 255, 0.8)',
@@ -230,7 +237,7 @@ const Footer = () => {
           
           <Stack direction="row" spacing={3}>
             <Link
-              to="/privacy"
+              href="/privacy"
               style={{
                 textDecoration: 'none',
                 color: 'rgba(255, 255, 255, 0.8)',
@@ -244,7 +251,7 @@ const Footer = () => {
               Privacy Policy
             </Link>
             <Link
-              to="/terms"
+              href="/terms"
               style={{
                 textDecoration: 'none',
                 color: 'rgba(255, 255, 255, 0.8)',
