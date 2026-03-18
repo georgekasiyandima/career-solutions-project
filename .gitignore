@@ -114,7 +114,7 @@ Thumbs.db
 .temp/
 
 # ========================================
-# Upload Files
+# Upload Files (exclude client public assets for Next.js deployment)
 # ========================================
 uploads/
 backend/uploads/
@@ -126,6 +126,15 @@ backend/uploads/
 *.png
 *.gif
 *.svg
+# Allow Next.js client public assets
+!client/public/
+!client/public/**/*.svg
+!client/public/**/*.png
+!client/public/**/*.jpg
+!client/public/**/*.jpeg
+!client/public/**/*.gif
+!client/public/**/*.webp
+!client/public/**/*.ico
 
 # ========================================
 # Docker
@@ -215,10 +224,10 @@ docker-compose.override.yml
 dist
 
 # ========================================
-# Gatsby files
+# Gatsby files (root public only - client/public needed for Next.js)
 # ========================================
 .cache/
-public
+/public
 
 # ========================================
 # Storybook build outputs
