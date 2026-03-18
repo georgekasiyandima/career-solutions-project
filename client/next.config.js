@@ -10,8 +10,8 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000',
   },
-  // Enable standalone output for Docker production builds
-  output: 'standalone',
+  // Standalone output for Docker only (Vercel uses its own deployment)
+  ...(process.env.VERCEL ? {} : { output: 'standalone' }),
   // Transpile Material-UI packages
   transpilePackages: ['@mui/material', '@mui/system', '@mui/icons-material'],
   // Webpack configuration for better compatibility
