@@ -163,13 +163,23 @@ const Header = () => {
     }
   };
 
-  const navigationItems = [
+  const mainNavItems = [
     { to: '/', label: 'Home', icon: <HomeIcon /> },
     { to: '/jobs', label: 'Jobs', icon: <WorkIcon /> },
     { to: '/services', label: 'Services', icon: <ArticleIcon /> },
     { to: '/success-stories', label: 'Success Stories', icon: <BarChartIcon /> },
     { to: '/about-us', label: 'About', icon: <InfoIcon /> },
     { to: '/enquiry', label: 'Contact', icon: <EventIcon /> },
+  ];
+
+  const mobileNavItems = [
+    ...mainNavItems,
+    { to: '/client-success-stories', label: 'Client Stories', icon: <BarChartIcon /> },
+    { to: '/hired', label: 'We\'ve Hired', icon: <WorkIcon /> },
+    { to: '/educational-hub', label: 'Educational Hub', icon: <ArticleIcon /> },
+    { to: '/interview-tips', label: 'Interview Tips', icon: <InfoIcon /> },
+    { to: '/faq', label: 'FAQ', icon: <InfoIcon /> },
+    { to: '/booking', label: 'Booking', icon: <EventIcon /> },
   ];
 
   return (
@@ -224,7 +234,7 @@ const Header = () => {
           {/* Desktop Navigation */}
           {!isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-              {navigationItems.map((item) => {
+              {mainNavItems.map((item) => {
                 const isActive = pathname === item.to;
                 return (
                   <Button
@@ -477,12 +487,12 @@ const Header = () => {
         open={drawerOpen}
         onClose={handleDrawerClose}
         PaperProps={{
-          sx: { width: 280 },
+          sx: { width: 300, maxWidth: '85vw' },
         }}
       >
         <FocusTrap active={drawerOpen}>
-          <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, borderBottom: '1px solid #e2e8f0' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, borderBottom: '1px solid #e2e8f0', flexShrink: 0 }}>
               <Typography variant="h6" sx={{ color: theme.palette.primary.main, fontWeight: 700 }}>
                 Menu
               </Typography>
@@ -490,8 +500,8 @@ const Header = () => {
                 <CloseIcon />
               </IconButton>
             </Box>
-            <List sx={{ pt: 0 }}>
-              {navigationItems.map((item) => {
+            <List sx={{ pt: 0, flex: 1, overflow: 'auto' }}>
+              {mobileNavItems.map((item) => {
                 const isActive = pathname === item.to;
                 return (
                   <ListItem key={item.to} disablePadding>
@@ -500,39 +510,45 @@ const Header = () => {
                       href={item.to}
                       onClick={handleDrawerClose}
                       sx={{
-                        backgroundColor: isActive ? 'rgba(37, 99, 235, 0.08)' : 'transparent',
+                        backgroundColor: isActive ? 'rgba(11, 68, 74, 0.08)' : 'transparent',
                         color: isActive ? theme.palette.primary.main : 'inherit',
+                        py: 1.5,
                       }}
                     >
+                      {item.icon && <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center', color: 'inherit' }}>{item.icon}</Box>}
                       <ListItemText primary={item.label} />
                     </ListItemButton>
                   </ListItem>
                 );
               })}
-              <Divider />
+              <Divider sx={{ my: 1 }} />
               {isAuthenticated ? (
                 <>
                   <ListItem disablePadding>
-                    <ListItemButton component={Link} href="/profile" onClick={handleDrawerClose}>
+                    <ListItemButton component={Link} href="/profile" onClick={handleDrawerClose} sx={{ py: 1.5 }}>
+                      <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center' }}><GroupIcon /></Box>
                       <ListItemText primary="Profile" />
                     </ListItemButton>
                   </ListItem>
                   {userRole === 'admin' && (
                     <ListItem disablePadding>
-                      <ListItemButton component={Link} href="/admin" onClick={handleDrawerClose}>
+                      <ListItemButton component={Link} href="/admin" onClick={handleDrawerClose} sx={{ py: 1.5 }}>
+                        <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center' }}><DashboardIcon /></Box>
                         <ListItemText primary="Admin Dashboard" />
                       </ListItemButton>
                     </ListItem>
                   )}
                   <ListItem disablePadding>
-                    <ListItemButton onClick={handleLogout}>
+                    <ListItemButton onClick={handleLogout} sx={{ py: 1.5 }}>
+                      <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center' }}><ExitToAppIcon /></Box>
                       <ListItemText primary="Logout" />
                     </ListItemButton>
                   </ListItem>
                 </>
               ) : (
                 <ListItem disablePadding>
-                  <ListItemButton component={Link} href="/login" onClick={handleDrawerClose}>
+                  <ListItemButton component={Link} href="/login" onClick={handleDrawerClose} sx={{ py: 1.5 }}>
+                    <Box sx={{ mr: 1.5, display: 'flex', alignItems: 'center' }}><LoginIcon /></Box>
                     <ListItemText primary="Login" />
                   </ListItemButton>
                 </ListItem>
