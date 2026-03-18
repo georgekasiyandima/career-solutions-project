@@ -20,8 +20,8 @@ import {
   FaPassport,
   FaShip,
   FaGlobe,
-  ArrowForward,
-  Star,
+  FaArrowRight,
+  FaStar,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { styled } from '@mui/material/styles';
@@ -196,7 +196,7 @@ const FeaturedServices = () => {
                           zIndex: 1,
                           boxShadow: '0 4px 8px rgba(245, 87, 108, 0.3)',
                         }}
-                        icon={<Star style={{ fontSize: 14 }} />}
+                        icon={<FaStar style={{ fontSize: 14 }} />}
                       />
                     )}
                     <CardContent sx={{ p: 3 }}>
@@ -251,7 +251,7 @@ const FeaturedServices = () => {
                         className="service-button"
                         variant="outlined"
                         fullWidth
-                        endIcon={<ArrowForward />}
+                        endIcon={<FaArrowRight />}
                         onClick={() => router.push('/services')}
                         sx={{
                           borderColor: '#0B444A',
